@@ -695,8 +695,8 @@
                 </div>
 
                 <!-- CTA -->
-                <div class="cta-section">
-                    <a href="https://wa.me/40750210121?text=Salut!%20Sunt%20interesat%20de%20o%20ofertă%20pentru%20website%20The%20Uniform%20Maker" target="_blank" class="cta-button">
+                <div class="cta-section" style="margin-bottom: 20px;">
+                    <a href="#" onclick="sendWhatsAppOffer(); return false;" class="cta-button">
                         <span>Solicită Oferta Personalizată</span>
                         <span>→</span>
                     </a>
@@ -713,7 +713,7 @@
                 <a href="https://wa.me/40750210121" target="_blank">WhatsApp</a>
             </p>
             <p style="margin-top: 20px; font-size: 0.8rem; color: var(--text-muted);">
-                © 2025 Lazart Studios. Toate drepturile rezervate.
+                © 2026 Lazart Studios. Toate drepturile rezervate.
             </p>
         </footer>
     </div>
@@ -786,6 +786,33 @@
             document.getElementById('totalPrice').textContent = `€${total.toLocaleString()}`;
             document.getElementById('extraPagesTotal').textContent = `€${extraPagesTotal}`;
             summaryList.innerHTML = summaryHTML;
+        }
+
+        function sendWhatsAppOffer() {
+            let total = BASE_PRICE;
+            let message = "*Solicitare Ofertă - The Uniform Maker*%0A%0A";
+            message += "*Pachet de bază:* €800%0A";
+            
+            // Add selected addons
+            document.querySelectorAll('.addon-item.selected').forEach(item => {
+                const price = parseInt(item.dataset.price);
+                const name = item.dataset.name;
+                total += price;
+                message += `• ${name}: €${price}%0A`;
+            });
+            
+            // Add extra pages
+            const extraPages = parseInt(document.getElementById('extraPages').value) || 0;
+            if (extraPages > 0) {
+                const extraPagesTotal = extraPages * EXTRA_PAGE_PRICE;
+                total += extraPagesTotal;
+                message += `• ${extraPages} pagini suplimentare: €${extraPagesTotal}%0A`;
+            }
+            
+            message += `%0A*Total estimat: €${total.toLocaleString()}*%0A`;
+            message += "%0A(Prețul nu include hosting Webflow: $29/lună anual sau $42/lună lunar)";
+            
+            window.open(`https://wa.me/40750210121?text=${message}`, '_blank');
         }
     </script>
 </body>
